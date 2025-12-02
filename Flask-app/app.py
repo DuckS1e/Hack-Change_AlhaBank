@@ -24,7 +24,7 @@ def init_db():
 @app.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('templateindex.html', username=session.get('username'))
+        return render_template('index.html', username=session.get('username'))
     return redirect(url_for('login'))
 
 
@@ -69,23 +69,20 @@ def login():
 
         if not username or not password:
             flash('Заполните все поля!')
-            return render_template('login.html')
-
-        conn = sqlite3.connect('users.db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
-        user = cursor.fetchone()
-        conn.close()
-
-        if user and check_password_hash(user[3], password):
-            session['user_id'] = user[0]
-            session['username'] = user[1]
-            session['email'] = user[2]
-            flash('Вход выполнен успешно!')
-            return redirect(url_for('index'))
         else:
-            flash('Неверное имя пользователя или пароль!')
-            return render_template('login.html')
+            conn = sqlite3.connect('users.db')
+            cursor = conn.cursor()
+            cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+            user = cursor.fetchone()
+            conn.close()
+
+            if user and check_password_hash(user[3], password):
+                session['user_id'] = user[0]
+                session['username'] = user[1]
+                flash('Вход выполнен успешно!')
+                return redirect(url_for('index'))
+            else:
+                flash('Неверное имя пользователя или пароль!')
 
     return render_template('login.html')
 
