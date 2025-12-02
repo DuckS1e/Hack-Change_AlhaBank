@@ -1,28 +1,32 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import os
+
 app = Flask(__name__)
 app.secret_key = 'ekwlnkfejwopJKNB98#@'
+
+
 def init_db():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
     c.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                email TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL
-            )
-        ''')
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
     conn.commit()
     conn.close()
+
 
 @app.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('index.html', username=session.get('username'))
+        return render_template('templateindex.html', username=session.get('username'))
     return redirect(url_for('login'))
+
 
 @app.route('/registration', methods=['GET', 'POST'])
 def register():
@@ -31,6 +35,7 @@ def register():
         email = request.form['email']
         password = request.form['password']
         confirmation = request.form['confirmation']
+
         if password != confirmation:
             flash('Пароли не совпали twin')
             return render_template('register.html')
@@ -40,13 +45,18 @@ def register():
         try:
             conn = sqlite3.connect('users.db')
             c = conn.cursor()
-            c.execute("""INSERT INTO users (username, email, password) VALUES (?, ?, ?)"""), (username, email, hash_pass)
+            c.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                      (username, email, hash_pass))
             conn.commit()
             conn.close()
             flash('Регистрация успешна cuhh проходи nigga')
             return redirect(url_for('login'))
-        except:
+        except sqlite3.IntegrityError:
             flash('Такой brototype уже есть')
+            return render_template('register.html')
+        except Exception as e:
+            flash(f'Произошла ошибка: {str(e)}')
+            return render_template('register.html')
 
     return render_template('register.html')
 
@@ -70,6 +80,7 @@ def login():
         if user and check_password_hash(user[3], password):
             session['user_id'] = user[0]
             session['username'] = user[1]
+            session['email'] = user[2]
             flash('Вход выполнен успешно!')
             return redirect(url_for('index'))
         else:
@@ -81,10 +92,9 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id')
-    session.pop('username')
-    session.pop('email')
+    session.clear()
     return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     init_db()
