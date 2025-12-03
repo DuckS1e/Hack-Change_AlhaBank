@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Bank Advisor — Альфа Банк</title>
+
+  <!-- Шрифт Inter (как на alfabank.ru) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black: #000000;
+      --red: #c00000;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --dark-gray: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--black);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: var(--red);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--red);
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+
+    .card {
+      background-color: var(--dark-gray);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h2, .card h3 {
+      color: var(--red);
+      margin-bottom: 1rem;
+    }
+
+    .metric {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .metric span {
+      font-size: 1rem;
+      color: #ccc;
+      font-weight: 400;
+    }
+
+    .shap-plot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .shap-bar {
+      flex: 1;
+      min-width: 200px;
+      background: #111;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--red);
+    }
+
+    .explanation {
+      background: linear-gradient(135deg, #1a0000, #000000);
+      border: 1px solid #330000;
+      padding: 1.2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+    }
+
+    .explanation strong {
+      color: var(--red);
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .product-card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.2rem;
+      flex: 1 1 250px;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--red);
+    }
+
+    .product-card h4 {
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .shap-plot {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🏦 AI Bank Advisor</h1>
+    <nav>
+      <ul>
+        <li><a href="#home" class="nav-link active" data-page="home">Главная</a></li>
+        <li><a href="#client" class="nav-link" data-page="client">Клиент</a></li>
+        <li><a href="#analysis" class="nav-link" data-page="analysis">Анализ</a></li>
+        <li><a href="#offers" class="nav-link" data-page="offers">Предложения</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Главная -->
+    <section id="home" class="page active">
+      <div class="card">
+        <h2>Добро пожаловать, аналитик</h2>
+        <p>Используйте ИИ для прогнозирования дохода клиентов и генерации персональных финансовых предложений.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔍 Быстрый поиск клиента</h3>
+        <input type="text" placeholder="Введите ID или ФИО клиента..." style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #333; background: #222; color: white; margin-top: 0.5rem;">
+        <button style="margin-top: 1rem; padding: 0.8rem 1.5rem; background: var(--red); color: white; border: none; border-radius: 8px; cursor: pointer;">Найти</button>
+      </div>
+    </section>
+
+    <!-- Страница клиента -->
+    <section id="client" class="page">
+      <div class="card">
+        <h2>Клиент: Анна Смирнова</h2>
+        <p><strong>ID:</strong> 10042 | <strong>Возраст:</strong> 38 | <strong>Стаж:</strong> 15 лет</p>
+      </div>
+
+      <div class="card">
+        <h3>Прогнозируемый доход</h3>
+        <div class="metric">142 000 ₽ <span>в месяц</span></div>
+        <p>Уровень: <strong style="color: var(--red);">Выше среднего</strong></p>
+      </div>
+
+      <div class="card">
+        <h3>Почему именно так?</h3>
+        <div class="explanation">
+          Модель учитывает ключевые факторы: <strong>высокий стаж работы (15 лет)</strong>, наличие <strong>высшего образования</strong> и <strong>город проживания (Москва)</strong>. Эти признаки вносят наибольший вклад в прогноз.
+        </div>
+      </div>
+    </section>
+
+    <!-- Анализ модели -->
+    <section id="analysis" class="page">
+      <div class="card">
+        <h2>📊 Объяснение модели (SHAP)</h2>
+        <p>Как признаки влияют на прогноз дохода:</p>
+
+        <div class="shap-plot">
+          <div class="shap-bar">
+            <strong>Стаж работы</strong><br>
+            Вклад: <span style="color: var(--red);">+28 000 ₽</span>
+          </div>
+          <div class="shap-bar">
+            <strong>Образование</strong><br>
+            Вклад: <span style="color: var(--red);">+22 000 ₽</span>
+          </div>
+          <div class="shap-bar">
+            <strong>Возраст</strong><br>
+            Вклад: <span style="color: #aaa;">+5 000 ₽</span>
+          </div>
+          <div class="shap-bar">
+            <strong>Кол-во детей</strong><br>
+            Вклад: <span style="color: #aaa;">–3 500 ₽</span>
+          </div>
+        </div>
+
+        <img src="https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/boston_house_price.png" alt="SHAP Beeswarm Plot" style="width: 100%; border-radius: 12px; margin-top: 1rem; border: 1px solid #333;">
+        <p style="font-size: 0.9rem; color: #777; margin-top: 0.5rem;">Пример: диаграмма SHAP (в реальном проекте генерируется динамически)</p>
+      </div>
+    </section>
+
+    <!-- Финансовые предложения -->
+    <section id="offers" class="page">
+      <div class="card">
+        <h2>💼 Персональные предложения</h2>
+        <p>Автоматически сгенерировано на основе профиля клиента:</p>
+
+        <div class="products">
+          <div class="product-card">
+            <h4>Премиум-счёт</h4>
+            <p>Без комиссии, кешбэк 5% на категории.</p>
+            <small>Рекомендовано: высокий доход</small>
+          </div>
+          <div class="product-card">
+            <h4>Инвестиционный пакет</h4>
+            <p>Доходность до 12% годовых.</p>
+            <small>Рекомендовано: накопления и стабильность</small>
+          </div>
+          <div class="product-card">
+            <h4>Ипотека с льготой</h4>
+            <p>Ставка от 6.5% при подтверждении дохода.</p>
+            <small>Рекомендовано: Москва, стабильный доход</small>
+          </div>
+        </div>
+
+        <button style="margin-top: 2rem; padding: 0.8rem 2rem; background: var(--red); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+          Скачать предложения (PDF)
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Альфа Банк. Внутренняя система аналитики. Доступ только для сотрудников.
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Активация пункта меню
+        document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+
+        // Показ нужной страницы
+        const pageId = this.getAttribute('data-page');
+        document.querySelectorAll('.page').forEach(page => {
+          page.classList.remove('active');
+        });
+        document.querySelector(`#${pageId}`).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
