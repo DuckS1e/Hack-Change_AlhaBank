@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Клиент{% endblock %}
+
+{% block content %}
+  <section class="page">
+    <div class="card">
+      <h2>Клиент: Анна Смирнова</h2>
+      <p><strong>ID:</strong> 10042 | <strong>Возраст:</strong> 38 | <strong>Стаж:</strong> 15 лет</p>
+    </div>
+
+    <div class="card">
+      <h3>Прогнозируемый доход</h3>
+      <div class="metric">142 000 ₽ <span>в месяц</span></div>
+      <p>Уровень: <strong style="color: var(--red);">Выше среднего</strong></p>
+    </div>
+
+    <div class="card">
+      <h3>Почему именно так?</h3>
+      <div class="explanation">
+        Модель учитывает ключевые факторы: <strong>высокий стаж работы (15 лет)</strong>, наличие <strong>высшего образования</strong> и <strong>город проживания (Москва)</strong>. Эти признаки вносят наибольший вклад в прогноз.
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}AI Bank Advisor{% endblock %} — Альфа Банк</title>
+
+  <!-- Шрифт Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Подключаем CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- Иконка вкладки -->
+  <link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}" type="image/svg+xml" />
+</head>
+<body>
+
+  <header>
+    <!-- Логотип -->
+    <div class="logo">
+      <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Логотип Альфа Банка" />
+      <h1>AI Bank Advisor</h1>
+    </div>
+
+    <!-- Навигация -->
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Главная</a></li>
+        <li><a href="{{ url_for('client') }}" class="{% if request.endpoint == 'client' %}active{% endif %}">Клиент</a></li>
+        <li><a href="{{ url_for('analysis') }}" class="{% if request.endpoint == 'analysis' %}active{% endif %}">Анализ</a></li>
+        <li><a href="{{ url_for('offers') }}" class="{% if request.endpoint == 'offers' %}active{% endif %}">Предложения</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    &copy; 2025 Альфа Банк. Внутренняя система аналитики. Доступ только для сотрудников.
+  </footer>
+
+  <!-- Подключаем JS -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

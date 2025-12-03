@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Анализ модели{% endblock %}
+
+{% block content %}
+  <section class="page">
+    <div class="card">
+      <h2>📊 Объяснение модели (SHAP)</h2>
+      <p>Как признаки влияют на прогноз дохода:</p>
+
+      <div class="shap-plot">
+        <div class="shap-bar">
+          <strong>Стаж работы</strong><br>
+          Вклад: <span style="color: var(--red);">+28 000 ₽</span>
+        </div>
+        <div class="shap-bar">
+          <strong>Образование</strong><br>
+          Вклад: <span style="color: var(--red);">+22 000 ₽</span>
+        </div>
+        <div class="shap-bar">
+          <strong>Возраст</strong><br>
+          Вклад: <span style="color: #aaa;">+5 000 ₽</span>
+        </div>
+        <div class="shap-bar">
+          <strong>Кол-во детей</strong><br>
+          Вклад: <span style="color: #aaa;">–3 500 ₽</span>
+        </div>
+      </div>
+
+      <img src="https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/boston_house_price.png"
+           alt="SHAP Beeswarm Plot" class="plot-image" />
+      <p class="caption">Пример: диаграмма SHAP (в реальном проекте — динамическая)</p>
+    </div>
+  </section>
+{% endblock %}
