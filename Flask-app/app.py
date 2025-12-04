@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-
-app = Flask(__name__)
+#custom_path = '/Users/maksserdukov/Desktop/Учеба/Без названия/public'
+app = Flask(__name__, template_folder='../public')
 app.secret_key = 'ekwlnkfejwopJKNB98#@'
 
 
@@ -24,8 +24,36 @@ def init_db():
 @app.route('/')
 def index():
     if 'user_id' in session:
-        return render_template('base.html', username=session.get('username'))
+        return redirect(url_for('home'))
     return redirect(url_for('login'))
+
+
+@app.route('/home')
+def home():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('home.html')
+
+
+@app.route('/client')
+def client():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('client.html')
+
+
+@app.route('/analysis')
+def analysis():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('analysis.html')
+
+
+@app.route('/offers')
+def offers():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('offers.html')
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -34,7 +62,7 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        confirmation = request.form['confirmation']
+        confirmation = request.form['confirm_password']
 
         if password != confirmation:
             flash('Пароли не совпали twin')
@@ -80,7 +108,7 @@ def login():
                 session['user_id'] = user[0]
                 session['username'] = user[1]
                 flash('Вход выполнен успешно!')
-                return redirect(url_for('index'))
+                return redirect(url_for('home'))
             else:
                 flash('Неверное имя пользователя или пароль!')
 
