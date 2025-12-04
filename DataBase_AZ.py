@@ -30,7 +30,7 @@ df_test = pd.read_csv(file_path_income_test, sep=';', encoding='utf-8')
 print(tabulate(df_test.head(), headers=df_test.columns, tablefmt='pretty'))
 
 # Читаем и делаем вывод sample_submission.csv
-# Либо это пример вывода, либо константая модель какая-то
+# Данный датасет надо менять под target, который мы сами получили.
 print(Fore.GREEN + "_"*35)
 print('DataFrame_Test')
 print("_"*35 + Style.RESET_ALL)
