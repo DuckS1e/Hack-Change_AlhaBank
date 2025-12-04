@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-#custom_path = '/Users/maksserdukov/Desktop/Учеба/Без названия/public'
-app = Flask(__name__, template_folder='../public')
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent
+TEMPLATE_PATH = BASE_DIR.parent / 'public'
+STATIC_PATH = BASE_DIR.parent / 'static'
+app = Flask(__name__, template_folder=TEMPLATE_PATH, static_folder=STATIC_PATH)
 app.secret_key = 'ekwlnkfejwopJKNB98#@'
 
 
