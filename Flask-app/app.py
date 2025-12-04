@@ -1,13 +1,51 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent
-TEMPLATE_PATH = BASE_DIR.parent / 'public'
-STATIC_PATH = BASE_DIR.parent / 'static'
-app = Flask(__name__, template_folder=TEMPLATE_PATH, static_folder=STATIC_PATH)
+
+# === Умное определение путей ===
+def find_public_folder():
+    # Пути, где может быть папка public
+    possible_paths = [
+        os.path.join(os.path.dirname(__file__), "public"),           # ./public (рядом с app.py)
+        os.path.join(os.path.dirname(__file__), "..", "public"),     # ../public (на уровень выше)
+        "public",                                                    # В текущей директории
+    ]
+    for path in possible_paths:
+        abs_path = os.path.abspath(path)
+        if os.path.exists(abs_path) and os.path.isdir(abs_path):
+            print(f"✅ Найдена папка public: {abs_path}")
+            return abs_path
+    raise Exception("❌ Не найдена папка 'public'. Проверьте структуру проекта.")
+
+# === Определяем пути ===
+try:
+    PUBLIC_DIR = find_public_folder()
+    STATIC_DIR = os.path.join(PUBLIC_DIR, "static")
+except Exception as e:
+    print(e)
+    exit(1)
+
+# Проверим, есть ли static
+if not os.path.exists(STATIC_DIR):
+    print(f"⚠️  Папка static не найдена: {STATIC_DIR}")
+    print("Создаю пустую папку (но стили работать не будут)")
+    os.makedirs(STATIC_DIR, exist_ok=True)
+
+app = Flask(
+    __name__,
+    template_folder=PUBLIC_DIR,           # HTML
+    static_folder=STATIC_DIR,             # CSS, JS, IMG
+    static_url_path="/static"             # URL: /static/css/style.css
+)
+
 app.secret_key = 'ekwlnkfejwopJKNB98#@'
 
+# === Для отладки — выводим пути при запуске ===
+print(f"🌍 Запуск приложения...")
+print(f"📁 Шаблоны: {app.template_folder}")
+print(f"📦 Статика:  {app.static_folder}")
+print(f"🔗 Статик URL: {app.static_url_path}")
 
 def init_db():
     conn = sqlite3.connect('users.db')
