@@ -8,24 +8,26 @@
       <h2>📊 Объяснение модели (SHAP)</h2>
       <p>Как признаки влияют на прогноз дохода:</p>
 
+      <!-- В analysis.html -->
       <div class="shap-plot">
-        <div class="shap-bar">
-          <strong>Стаж работы</strong><br>
-          Вклад: <span style="color: var(--red);">+28 000 ₽</span>
+        <div class="shap-bar positive">
+          <span class="shap-feature">Стаж работы</span><br>
+          <span class="shap-arrow up">↑</span><span class="shap-value positive">+28 000 ₽</span>
         </div>
-        <div class="shap-bar">
-          <strong>Образование</strong><br>
-          Вклад: <span style="color: var(--red);">+22 000 ₽</span>
+        <div class="shap-bar positive">
+          <span class="shap-feature">Образование</span><br>
+          <span class="shap-arrow up">↑</span><span class="shap-value positive">+22 000 ₽</span>
         </div>
-        <div class="shap-bar">
-          <strong>Возраст</strong><br>
-          Вклад: <span style="color: #aaa;">+5 000 ₽</span>
+        <div class="shap-bar positive">
+          <span class="shap-feature">Возраст</span><br>
+          <span class="shap-arrow up">↑</span> <span class="shap-value positive">+5 000 ₽</span>
         </div>
-        <div class="shap-bar">
-          <strong>Кол-во детей</strong><br>
-          Вклад: <span style="color: #aaa;">–3 500 ₽</span>
+        <div class="shap-bar negative">
+          <span class="shap-feature">Кол-во детей</span><br>
+          <span class="shap-arrow down">↓</span><span class="shap-value negative">–3 500 ₽</span>
         </div>
       </div>
+
 
       <img src="https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/boston_house_price.png"
            alt="SHAP Beeswarm Plot" class="plot-image" />
