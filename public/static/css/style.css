@@ -26,14 +26,42 @@ body {
 
 /* === Header === */
 header {
-  background-color: var(--black);
+  background-color: var(--dark-bg);
   padding: 1.2rem 2rem;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
+  position: relative;
+}
+
+/* Для адаптива: на маленьких экранах — стекаем в колонку */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  nav {
+    order: 3;
+    padding: 0 1rem;
+  }
+
+  nav ul {
+    justify-content: center;
+  }
+
+  .user-profile {
+    justify-content: center;
+    padding: 0 1rem;
+  }
 }
 
 .logo {
@@ -307,4 +335,29 @@ footer {
   .card {
     padding: 1.4rem;
   }
+}
+/* === Профиль пользователя === */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.username {
+  color: var(--white-light);
+  font-weight: 500;
+}
+
+.logout-link {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+.logout-link:hover {
+  color: var(--red-lighter);
+  text-decoration: underline;
 }
