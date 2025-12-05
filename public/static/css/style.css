@@ -113,8 +113,8 @@ main {
   border-radius: 12px;
   padding: 1.6rem;
   margin-bottom: 1.8rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 1px solid #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
 }
 
 .card h2,
@@ -124,6 +124,39 @@ main {
   font-weight: 600;
   font-size: 1.4rem;
 }
+
+/* Текст внутри карточки — все метки и значения */
+.card p,
+.card .info-label,
+.card .info-value,
+.card .info-row,
+.shap-feature,
+.shap-value {
+  color: var(--white) !important;
+  font-size: 1.1rem;
+}
+
+/* Для пар "ключ: значение" — метки (подсказки) */
+.info-label {
+  color: var(--white-light) !important;
+  font-weight: 500;
+}
+
+/* Значения — белые */
+.info-value {
+  color: var(--white) !important;
+  font-weight: 600;
+}
+
+/* Названия признаков в анализе */
+.shap-feature {
+  color: var(--white) !important;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
 
 /* === Метрики === */
 .metric {
