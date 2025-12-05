@@ -18,11 +18,10 @@
   <link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}" type="image/svg+xml" />
 </head>
 <body>
-
   <header>
-    <!-- Логотип -->
+    <!-- Логотип и название -->
     <div class="logo">
-      <img src="{{ url_for('static', filename='img/main_logo.jpg') }}" alt="Логотип Альфа Банка" />
+      <img src="{{ url_for('static', filename='img/main_logo.jpg') }}" alt="Логотип" />
       <h1>AI Bank Advisor</h1>
     </div>
 
@@ -35,7 +34,18 @@
         <li><a href="{{ url_for('offers') }}" class="{% if request.endpoint == 'offers' %}active{% endif %}">Предложения</a></li>
       </ul>
     </nav>
+
+    <!-- Профиль пользователя -->
+    <div class="user-profile">
+      {% if session.get('username') %}
+        <span class="username">Привет, {{ session['username'] }}!</span>
+        <a href="{{ url_for('logout') }}" class="logout-link">Выход</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="logout-link">Войти</a>
+      {% endif %}
+    </div>
   </header>
+
 
   <main>
     {% block content %}{% endblock %}
