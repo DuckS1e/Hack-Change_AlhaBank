@@ -1,0 +1,362 @@
+:root {
+  --black: #000000;
+  --red: #c00000;
+  --red-light: #e60000;
+  --red-lighter: #ff3333;     /* Ещё светлее для мелкого текста */
+  --green: #00b300;
+  --green-light: #00d600;
+  --white: #ffffff;
+  --white-light: #e0e0e0;     /* Светло-серый, но НЕ серый фон! */
+  --dark-bg: #000000;
+  --card-bg: #0a0a0a;         /* Почти чёрный, не серый */
+  --border: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--white);
+  line-height: 1.6;
+  padding: 0;
+}
+
+/* === Header === */
+header {
+  background-color: var(--dark-bg);
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  position: relative;
+}
+
+/* Для адаптива: на маленьких экранах — стекаем в колонку */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  nav {
+    order: 3;
+    padding: 0 1rem;
+  }
+
+  nav ul {
+    justify-content: center;
+  }
+
+  .user-profile {
+    justify-content: center;
+    padding: 0 1rem;
+  }
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo img {
+  height: 40px;
+  border-radius: 8px;
+}
+
+.logo h1 {
+  color: var(--red);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--red);
+}
+
+/* === Main === */
+main {
+  padding: 2rem;
+}
+
+/* === Карточки === */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.6rem;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+}
+
+.card h2,
+.card h3 {
+  color: var(--white);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+/* === Метрики === */
+.metric {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.metric span {
+  font-size: 1.1rem;
+  color: var(--white-light);  /* Светло-белый вместо серого */
+  font-weight: 400;
+  margin-left: 0.5rem;
+}
+
+/* === Объяснение === */
+.explanation {
+  background: linear-gradient(135deg, #120000, #080000);
+  border: 1px solid var(--red-lighter);
+  padding: 1.4rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: var(--white);
+  line-height: 1.7;
+}
+
+.explanation strong {
+  color: var(--red-lighter);
+}
+
+/* === SHAP-батончики === */
+.shap-plot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin: 1.6rem 0;
+}
+
+.shap-bar {
+  flex: 1;
+  min-width: 220px;
+  background: #0f0f0f;
+  padding: 1.1rem;
+  border-radius: 10px;
+  border-left: 5px solid var(--red);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.shap-bar.positive {
+  border-left-color: var(--green);
+}
+
+.shap-bar.negative {
+  border-left-color: var(--red-light);
+}
+
+.shap-bar strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--white);
+}
+
+.shap-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.shap-value.positive {
+  color: var(--green-light);
+}
+
+.shap-value.negative {
+  color: var(--red-light);
+}
+
+.shap-arrow {
+  margin-right: 0.4rem;
+  font-weight: bold;
+}
+
+.shap-arrow.up {
+  color: var(--green-light);
+}
+
+.shap-arrow.down {
+  color: var(--red-light);
+}
+
+/* === Продукты === */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+}
+
+.product-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem;
+  flex: 1 1 260px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(200, 0, 0, 0.25);
+  border-color: var(--red);
+}
+
+.product-card h4 {
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  font-size: 1.2rem;
+}
+
+.product-card p {
+  color: var(--white-light);   /* Не серый! */
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+}
+
+.product-card small {
+  font-size: 0.85rem;
+  color: var(--red-lighter);   /* Акцент, а не серый */
+}
+
+/* === Кнопки === */
+.btn-primary {
+  margin-top: 1.5rem;
+  padding: 0.9rem 2rem;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--red-light);
+}
+
+/* === Формы === */
+.search-input {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #111;
+  color: var(--white);
+  margin-top: 0.6rem;
+  font-size: 1rem;
+}
+
+.search-input::placeholder {
+  color: var(--white-light);   /* Не серый! */
+}
+
+/* === Картинки графиков === */
+.plot-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 1.4rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.caption {
+  font-size: 0.9rem;
+  color: var(--white-light);   /* Не #777! */
+  margin-top: 0.6rem;
+  text-align: center;
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 2.2rem;
+  color: var(--white-light);   /* Не серый! */
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .shap-plot {
+    flex-direction: column;
+  }
+
+  .logo h1 {
+    font-size: 1.6rem;
+  }
+}
+/* === Профиль пользователя === */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.username {
+  color: var(--white-light);
+  font-weight: 500;
+}
+
+.logout-link {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+.logout-link:hover {
+  color: var(--red-lighter);
+  text-decoration: underline;
+}
