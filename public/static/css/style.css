@@ -396,3 +396,31 @@ footer {
   color: var(--red-lighter);
   text-decoration: underline;
 }
+
+/* Цвет label в формах — делаем серым */
+.form-control {
+  background-color: #1a1a1a !important;  /* Тёмный серый */
+  border: 1px solid #333 !important;
+  color: var(--white) !important;         /* Текст белый */
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+/* При фокусе — подсветка красной рамкой */
+.form-control:focus {
+  background-color: #1a1a1a !important;
+  color: var(--white) !important;
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(192, 0, 0, 0.25) !important;
+}
+
+/* Цвет label — как вы хотите: --gray */
+.form-label {
+  color: var(--gray) !important;
+}
+
+/* Цвет placeholder (подсказки) — серый */
+.form-control::placeholder {
+  color: var(--gray) !important;
+  opacity: 1;
+}
